@@ -20,8 +20,8 @@ public class AdopetConsoleApplication {
         System.out.println("##### BOAS VINDAS AO SISTEMA ADOPET CONSOLE #####");
         try {
             int opcaoEscolhida = 0;
-            while (opcaoEscolhida != 5) {
-                System.out.println("\nDIGITE O NÚMERO DA OPERAÇÃO DESEJADA:");
+            switch (opcaoEscolhida) {
+                System.out.println("1 -> Listar abrigos cadastrados");
                 System.out.println("1 -> Listar abrigos cadastrados");
                 System.out.println("2 -> Cadastrar novo abrigo");
                 System.out.println("3 -> Listar pets do abrigo");
@@ -32,22 +32,7 @@ public class AdopetConsoleApplication {
                 opcaoEscolhida = Integer.parseInt(textoDigitado);
 
                 if (opcaoEscolhida == 1) {
-                    HttpClient client = HttpClient.newHttpClient();
-                    String uri = "http://localhost:8080/abrigos";
-                    HttpRequest request = HttpRequest.newBuilder()
-                            .uri(URI.create(uri))
-                            .method("GET", HttpRequest.BodyPublishers.noBody())
-                            .build();
-                    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-                    String responseBody = response.body();
-                    JsonArray jsonArray = JsonParser.parseString(responseBody).getAsJsonArray();
-                    System.out.println("Abrigos cadastrados:");
-                    for (JsonElement element : jsonArray) {
-                        JsonObject jsonObject = element.getAsJsonObject();
-                        long id = jsonObject.get("id").getAsLong();
-                        String nome = jsonObject.get("nome").getAsString();
-                        System.out.println(id +" - " +nome);
-                    }
+                    cadastrarAbrigo();
                 } else if (opcaoEscolhida == 2) {
                     System.out.println("Digite o nome do abrigo:");
                     String nome = new Scanner(System.in).nextLine();
@@ -84,7 +69,7 @@ public class AdopetConsoleApplication {
                     String idOuNome = new Scanner(System.in).nextLine();
 
                     HttpClient client = HttpClient.newHttpClient();
-                    String uri = "http://localhost:8080/abrigos/" +idOuNome +"/pets";
+                    String uri = "http://localhost:8080/abrigos/" + idOuNome + "/pets";
                     HttpRequest request = HttpRequest.newBuilder()
                             .uri(URI.create(uri))
                             .method("GET", HttpRequest.BodyPublishers.noBody())
@@ -105,7 +90,7 @@ public class AdopetConsoleApplication {
                         String nome = jsonObject.get("nome").getAsString();
                         String raca = jsonObject.get("raca").getAsString();
                         int idade = jsonObject.get("idade").getAsInt();
-                        System.out.println(id +" - " +tipo +" - " +nome +" - " +raca +" - " +idade +" ano(s)");
+                        System.out.println(id + " - " + tipo + " - " + nome + " - " + raca + " - " + idade + " ano(s)");
                     }
                 } else if (opcaoEscolhida == 4) {
                     System.out.println("Digite o id ou nome do abrigo:");
@@ -118,7 +103,7 @@ public class AdopetConsoleApplication {
                     try {
                         reader = new BufferedReader(new FileReader(nomeArquivo));
                     } catch (IOException e) {
-                        System.out.println("Erro ao carregar o arquivo: " +nomeArquivo);
+                        System.out.println("Erro ao carregar o arquivo: " + nomeArquivo);
                         continue;
                     }
                     String line;
@@ -172,6 +157,25 @@ public class AdopetConsoleApplication {
             System.out.println("Finalizando o programa...");
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void cadastrarAbrigo() throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        String uri = "http://localhost:8080/abrigos";
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(uri))
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        String responseBody = response.body();
+        JsonArray jsonArray = JsonParser.parseString(responseBody).getAsJsonArray();
+        System.out.println("Abrigos cadastrados:");
+        for (JsonElement element : jsonArray) {
+            JsonObject jsonObject = element.getAsJsonObject();
+            long id = jsonObject.get("id").getAsLong();
+            String nome = jsonObject.get("nome").getAsString();
+            System.out.println(id + " - " + nome);
         }
     }
 }
