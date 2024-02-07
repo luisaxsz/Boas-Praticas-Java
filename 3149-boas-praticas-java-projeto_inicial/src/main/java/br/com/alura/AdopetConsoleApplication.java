@@ -19,33 +19,36 @@ public class AdopetConsoleApplication {
         AdopetConsoleApplication adopetConsoleApplication = new AdopetConsoleApplication();
         System.out.println("##### BOAS VINDAS AO SISTEMA ADOPET CONSOLE #####");
         try {
-            System.out.println("1 -> Listar abrigos cadastrados");
-            System.out.println("2 -> Cadastrar novo abrigo");
-            System.out.println("3 -> Listar pets do abrigo");
-            System.out.println("4 -> Importar pets do abrigo");
-            System.out.println("5 -> Sair");
+            int opcaoEscolhida = 0;
+            while (opcaoEscolhida != 5){
+                System.out.println("1 -> Listar abrigos cadastrados");
+                System.out.println("2 -> Cadastrar novo abrigo");
+                System.out.println("3 -> Listar pets do abrigo");
+                System.out.println("4 -> Importar pets do abrigo");
+                System.out.println("5 -> Sair");
 
-            String textoDigitado = new Scanner(System.in).nextLine();
-            int opcaoEscolhida = Integer.parseInt(textoDigitado);
+                String textoDigitado = new Scanner(System.in).nextLine();
+                opcaoEscolhida = Integer.parseInt(textoDigitado);
 
-            switch (opcaoEscolhida) {
-                case 1:
-                    adopetConsoleApplication.listarAbrigo();
-                    break;
-                case 2:
-                    adopetConsoleApplication.cadastrarAbrigo();
-                    break;
-                case 3:
-                    adopetConsoleApplication.listarPetsAbrigo();
-                    break;
-                case 4:
-                    adopetConsoleApplication.importarPetsDoAbrigo();
-                    break;
-                case 5:
-                    break;
-                default:
-                    System.out.println("NÚMERO INVÁLIDO!");
-                    opcaoEscolhida = 0;
+                switch (opcaoEscolhida) {
+                    case 1:
+                        adopetConsoleApplication.listarAbrigo();
+                        break;
+                    case 2:
+                        adopetConsoleApplication.cadastrarAbrigo();
+                        break;
+                    case 3:
+                        adopetConsoleApplication.listarPetsAbrigo();
+                        break;
+                    case 4:
+                        adopetConsoleApplication.importarPetsDoAbrigo();
+                        break;
+                    case 5:
+                        break;
+                    default:
+                        System.out.println("NÚMERO INVÁLIDO!");
+                        opcaoEscolhida = 0;
+                }
             }
             System.out.println("Finalizando o programa...");
         } catch (Exception e) {
