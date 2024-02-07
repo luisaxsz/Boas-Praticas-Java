@@ -1,15 +1,18 @@
 package br.com.alura;
 
+import br.com.alura.client.ClientHttpConfiguration;
 import br.com.alura.service.AbrigoService;
 import br.com.alura.service.PetService;
 import java.util.Scanner;
 
 public class AdopetConsoleApplication {
     public static void main(String[] args) {
+        //Impede de instânciar mais de uma vez
+      ClientHttpConfiguration client = new ClientHttpConfiguration();
         //Instacias do service para importar metodos das classes
-        AbrigoService abrigoService = new AbrigoService();
+        AbrigoService abrigoService = new AbrigoService(client);
 
-        PetService petService = new PetService();
+        PetService petService = new PetService(client);
 
         System.out.println("##### BOAS VINDAS AO SISTEMA ADOPET CONSOLE #####");
         try {
