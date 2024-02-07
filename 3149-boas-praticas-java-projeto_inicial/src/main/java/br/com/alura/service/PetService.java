@@ -1,6 +1,7 @@
 package br.com.alura.service;
 
 import br.com.alura.client.ClientHttpConfiguration;
+import br.com.alura.domain.Pet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -15,12 +16,14 @@ import java.util.Scanner;
 public class PetService {
 
     private ClientHttpConfiguration client;
+
     public PetService(ClientHttpConfiguration client) {
         this.client = client;
     }
 
 
     ClientHttpConfiguration clientHttpConfiguration = new ClientHttpConfiguration();
+
     public void listarPetsAbrigo() throws IOException, InterruptedException {
         System.out.println("Digite o id ou nome do abrigo:");
         String idOuNome = new Scanner(System.in).nextLine();
@@ -45,7 +48,7 @@ public class PetService {
         }
     }
 
-   public void importarPetsDoAbrigo() throws IOException, InterruptedException {
+    public void importarPetsDoAbrigo() throws IOException, InterruptedException {
         System.out.println("Digite o id ou nome do abrigo:");
         String idOuNome = new Scanner(System.in).nextLine();
 
@@ -68,16 +71,10 @@ public class PetService {
             String cor = campos[4];
             Float peso = Float.parseFloat(campos[5]);
 
-            JsonObject json = new JsonObject();
-            json.addProperty("tipo", tipo.toUpperCase());
-            json.addProperty("nome", nome);
-            json.addProperty("raca", raca);
-            json.addProperty("idade", idade);
-            json.addProperty("cor", cor);
-            json.addProperty("peso", peso);
+            Pet pet = new Pet(tipo, nome, raca, idade, cor, peso);
 
             String uri = "http://localhost:8080/abrigos/" + idOuNome + "/pets";
-            HttpResponse<String> response = client.dispararRequisicaoPost( uri, json);
+            HttpResponse<String> response = client.dispararRequisicaoPost(uri, pet);
             int statusCode = response.statusCode();
             String responseBody = response.body();
             if (statusCode == 200) {
