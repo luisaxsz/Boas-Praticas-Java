@@ -20,7 +20,9 @@ public class AbrigoService {
         String uri = "http://localhost:8080/abrigos";
         HttpResponse<String> response = client.dispararRequisicaoGet(uri);
         String responseBody = response.body();
+        //Transforma responseBody (string) em array
         Abrigo[] abrigos =  new ObjectMapper().readValue(responseBody,Abrigo[].class);
+        //Transforma array em lista
         List<Abrigo> abrigosList = Arrays.stream(abrigos).toList();
         System.out.println("Abrigos cadastrados:");
         for (Abrigo abrigo : abrigosList) {

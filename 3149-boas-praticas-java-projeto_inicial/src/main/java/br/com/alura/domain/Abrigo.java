@@ -11,14 +11,14 @@ public class Abrigo {
         this.email = email;
     }
 
-    private Long id;
+    private long id;
     private String nome;
     private String telefone;
     private String email;
 
     private Pet[] pets;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -37,4 +37,15 @@ public class Abrigo {
     public Pet[] getPets() {
         return pets;
     }
+
+    public void setId(long l) {
+    }
+    // Simula retorno de to string como json
+    @Override
+    public String toString() {
+        return """
+                     "id":%s,"nome":"%s","telefone":"%s","email":"%s"
+                     """.formatted(this.id, this.nome, this.telefone, this.email);
+    }
+
 }
