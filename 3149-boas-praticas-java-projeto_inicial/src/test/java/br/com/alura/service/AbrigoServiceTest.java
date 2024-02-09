@@ -21,7 +21,7 @@ public class AbrigoServiceTest {
     //Simula instância da classe
     private ClientHttpConfiguration client = mock(ClientHttpConfiguration.class);
     private AbrigoService abrigoService = new AbrigoService(client);
-    private HttpResponse<String> response = mock(HttpResponse.class);
+   private HttpResponse<String> response = mock(HttpResponse.class);
     //Criação objeto teste
     private Abrigo abrigo = new Abrigo("Teste", "61981880392", "abrigo_alura@gmail.com");
 
