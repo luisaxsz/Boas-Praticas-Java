@@ -24,8 +24,16 @@ public class AbrigoService {
         Abrigo[] abrigos =  new ObjectMapper().readValue(responseBody,Abrigo[].class);
         //Transforma array em lista
         List<Abrigo> abrigosList = Arrays.stream(abrigos).toList();
+
+        if(abrigosList.isEmpty()){
+            System.out.println("Não há abrigos cadastrados");
+        }
+        mostrarAbrigos(abrigosList);
+    }
+
+    private void mostrarAbrigos(List<Abrigo> abrigos){
         System.out.println("Abrigos cadastrados:");
-        for (Abrigo abrigo : abrigosList) {
+        for (Abrigo abrigo : abrigos) {
             long id = abrigo.getId();
             String nome = abrigo.getNome();
             System.out.println(id + " - " + nome);
