@@ -41,16 +41,7 @@ public class AdocaoController {
     @PutMapping("/reprovar")
     @Transactional
     public ResponseEntity<String> reprovar(@RequestBody @Valid Adocao adocao) {
-        adocao.setStatus(StatusAdocao.REPROVADO);
-        repository.save(adocao);
-
-        SimpleMailMessage email = new SimpleMailMessage();
-        email.setFrom("adopet@email.com.br");
-        email.setTo(adocao.getTutor().getEmail());
-        email.setSubject("Adoção reprovada");
-        email.setText("Olá " +adocao.getTutor().getNome() +"!\n\nInfelizmente sua adoção do pet " +adocao.getPet().getNome() +", solicitada em " +adocao.getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")) +", foi reprovada pelo abrigo " +adocao.getPet().getAbrigo().getNome() +" com a seguinte justificativa: " +adocao.getJustificativaStatus());
-        emailSender.send(email);
-
+        adocaoService.reprovar(adocao);
         return ResponseEntity.ok().build();
     }
 
