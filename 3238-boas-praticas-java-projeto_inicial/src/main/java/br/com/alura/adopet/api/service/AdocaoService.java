@@ -37,30 +37,9 @@ public class AdocaoService {
         Pet pet = petRep.getReferenceById(dto.idPet());
         Tutor tutor = tutorRep.getReferenceById(dto.idTutor());
 
-        if (pet.getAdotado() == true) {
-            throw new ValidacaoException("Pet já foi adotado");
-        } else {
-            List<Adocao> adocoes = adocaoRep.findAll();
-            for (Adocao a : adocoes) {
-                if (a.getTutor() == tutor && a.getStatus() == StatusAdocao.AGUARDANDO_AVALIACAO) {
-                    throw new ValidacaoException("Tutor já possui outra adoção aguardando avaliação!");
-                }
-            }
-            for (Adocao a : adocoes) {
-                if (a.getPet() == pet && a.getStatus() == StatusAdocao.AGUARDANDO_AVALIACAO) {
-                    throw new ValidacaoException("Pet já está aguardando avaliação para ser adotado!");
-                }
-            }
-            for (Adocao a : adocoes) {
-                int contador = 0;
-                if (a.getTutor() == tutor && a.getStatus() == StatusAdocao.APROVADO) {
-                    contador = contador + 1;
-                }
-                if (contador == 5) {
-                    throw new ValidacaoException("Tutor chegou ao limite máximo de 5 adoções!");
-                }
-            }
-        }
+        //Chamar validações
+
+
         //Salvar a adocao
         Adocao adocao = new Adocao();
         adocao.setData(LocalDateTime.now());
@@ -74,7 +53,7 @@ public class AdocaoService {
     }
 
     public void aprovar(AprovacaoAdocaoDto dto) {
-        Adocao adocao = adocaoRep.getReferenceById(dto.idAdocao())
+        Adocao adocao = adocaoRep.getReferenceById(dto.idAdocao());
         adocao.setStatus(StatusAdocao.APROVADO);
         adocaoRep.save(adocao);
 
