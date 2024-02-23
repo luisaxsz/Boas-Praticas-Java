@@ -11,6 +11,7 @@ import br.com.alura.adopet.api.model.Tutor;
 import br.com.alura.adopet.api.repository.AdocaoRepository;
 import br.com.alura.adopet.api.repository.PetRepository;
 import br.com.alura.adopet.api.repository.TutorRepository;
+import br.com.alura.adopet.api.validacoes.ValidacaoSolicitacaoAdocao;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,12 +34,17 @@ public class AdocaoService {
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    private List<ValidacaoSolicitacaoAdocao> validacoes;
+
     public void solicitar(SolicitacaoAdocaoDto dto) {
         Pet pet = petRep.getReferenceById(dto.idPet());
         Tutor tutor = tutorRep.getReferenceById(dto.idTutor());
 
         //Chamar validações
-
+        //Chain of responsability
+        //Loop que pecorre lista e para cada um passa o dto
+        validacoes.forEach(v -> v.validar(dto));
 
         //Salvar a adocao
         Adocao adocao = new Adocao();

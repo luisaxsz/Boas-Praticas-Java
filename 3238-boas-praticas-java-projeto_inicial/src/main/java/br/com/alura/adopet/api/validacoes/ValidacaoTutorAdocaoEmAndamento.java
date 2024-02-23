@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class ValidacaoTutorAdocaoEmAndamento {
+public class ValidacaoTutorAdocaoEmAndamento implements ValidacaoSolicitacaoAdocao{
 
     @Autowired
     private AdocaoRepository adocaoRep;
