@@ -11,20 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class ValidacaoPetAdocaoEmAndamento implements ValidacaoSolicitacaoAdocao{
+public class ValidacaoPetAdocaoEmAndamento implements ValidacaoSolicitacaoAdocao {
     @Autowired
     private AdocaoRepository adocaoRep;
 
-    @Autowired
-    private PetRepository petRep;
-
-    public void validar(SolicitacaoAdocaoDto dto){
-        List<Adocao> adocoes = adocaoRep.findAll();
-        Pet pet = petRep.getReferenceById(dto.idPet());
-        for (Adocao a : adocoes) {
-            if (a.getPet() == pet && a.getStatus() == StatusAdocao.AGUARDANDO_AVALIACAO) {
-                throw new ValidacaoException("Pet já está aguardando avaliação para ser adotado!");
-            }
+    public void validar(SolicitacaoAdocaoDto dto) {
+        boolean petTemAdocaoAndamento = adocaoRep.ExistsByPetIdStatus(dto.idPet(), StatusAdocao.AGUARDANDO_AVALIACAO);
+        if (petTemAdocaoAndamento) {
+            throw new ValidacaoException("Pet já está aguardando avaliação para ser adotado!");
         }
     }
 }

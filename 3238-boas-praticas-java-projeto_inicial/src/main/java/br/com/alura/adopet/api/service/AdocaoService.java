@@ -47,12 +47,7 @@ public class AdocaoService {
         validacoes.forEach(v -> v.validar(dto));
 
         //Salvar a adocao
-        Adocao adocao = new Adocao();
-        adocao.setData(LocalDateTime.now());
-        adocao.setStatus(StatusAdocao.AGUARDANDO_AVALIACAO);
-        adocao.setPet(pet);
-        adocao.setTutor(tutor);
-        adocao.setMotivo(dto.motivo());
+        Adocao adocao = new Adocao(tutor,pet, dto.motivo());
         adocaoRep.save(adocao);
 
         emailService.enviarEmail(adocao.getPet().getAbrigo().getEmail(), "Solicitação de adoção" ,"Olá " + adocao.getPet().getAbrigo().getNome() + "!\n\nUma solicitação de adoção foi registrada hoje para o pet: " + adocao.getPet().getNome() + ". \nFavor avaliar para aprovação ou reprovação.");
@@ -60,7 +55,7 @@ public class AdocaoService {
 
     public void aprovar(AprovacaoAdocaoDto dto) {
         Adocao adocao = adocaoRep.getReferenceById(dto.idAdocao());
-        adocao.setStatus(StatusAdocao.APROVADO);
+        adocao.marcarComoAprovado();
         adocaoRep.save(adocao);
 
         emailService.enviarEmail(
@@ -72,8 +67,7 @@ public class AdocaoService {
 
     public void reprovar(ReprovacaoAdocaoDto dto) {
         Adocao adocao = adocaoRep.getReferenceById(dto.idAdocao());
-        adocao.setStatus(StatusAdocao.REPROVADO);
-        adocao.setJustificativaStatus(dto.motivo());
+        adocao.marcarComoReprovado(dto.motivo());
         adocaoRep.save(adocao);
         emailService.enviarEmail(
                 adocao.getPet().getAbrigo().getEmail(),
