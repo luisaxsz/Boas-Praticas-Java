@@ -1,6 +1,7 @@
 package br.com.alura.adopet.api.validacoes;
 
 import br.com.alura.adopet.api.dto.SolicitacaoAdocaoDto;
+import br.com.alura.adopet.api.exception.ValidacaoException;
 import br.com.alura.adopet.api.model.Pet;
 import br.com.alura.adopet.api.repository.PetRepository;
 import org.junit.jupiter.api.Assertions;
@@ -26,7 +27,7 @@ class ValidacaoPetDisponivelTest {
 
     @Test
     @DisplayName("Deveria permitir adoção do pet")
-    void validacao() {
+    void validacaoDisponivel() {
         SolicitacaoAdocaoDto dto = new SolicitacaoAdocaoDto(7l, 2l, "qualquer motivo");
         //Transformar em atributo
         //ValidacaoPetDisponivel validacao = new ValidacaoPetDisponivel();
@@ -37,4 +38,20 @@ class ValidacaoPetDisponivelTest {
 
         Assertions.assertDoesNotThrow(() -> validacao.validar(dto));
     }
+
+    @Test
+    @DisplayName("Não deveria permitir adoção do pet")
+    void validacaoIndisponivel() {
+        SolicitacaoAdocaoDto dto = new SolicitacaoAdocaoDto(7l, 2l, "qualquer motivo");
+        //Transformar em atributo
+        //ValidacaoPetDisponivel validacao = new ValidacaoPetDisponivel();
+
+        BDDMockito.given(petRepository.getReferenceById(dto.idPet())).willReturn(pet);
+        BDDMockito.given(pet.getAdotado()).willReturn(true);
+
+        //Qual exception foi lançada
+        //Validação que quero receber e de onde quero receber
+        Assertions.assertThrows(ValidacaoException.class, () -> validacao.validar(dto));
+    }
+
 }
