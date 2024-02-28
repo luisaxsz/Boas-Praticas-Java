@@ -18,6 +18,7 @@ public class AdocaoController {
     @Autowired
     private AdocaoService adocaoService;
 
+
     @PostMapping
     @Transactional
     public ResponseEntity<String> solicitar(@RequestBody @Valid SolicitacaoAdocaoDto dto) {
