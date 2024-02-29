@@ -10,6 +10,8 @@ import java.util.Objects;
 @Entity
 @Table(name = "pets")
 public class Pet {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,6 +29,7 @@ public class Pet {
     @NotNull
     private Float peso;
     private Boolean adotado;
+
 
     @ManyToOne
     @JsonBackReference("abrigo_pets")

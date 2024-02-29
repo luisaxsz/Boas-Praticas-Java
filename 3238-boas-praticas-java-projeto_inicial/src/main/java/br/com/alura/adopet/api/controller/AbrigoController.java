@@ -4,6 +4,7 @@ import br.com.alura.adopet.api.exception.ValidacaoException;
 import br.com.alura.adopet.api.model.Abrigo;
 import br.com.alura.adopet.api.model.Pet;
 import br.com.alura.adopet.api.service.AbrigoService;
+import br.com.alura.adopet.api.service.PetService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ import java.util.List;
 public class AbrigoController {
     @Autowired
     private AbrigoService abrigoService;
+
+    @Autowired
+    private PetService petService;
 
     @GetMapping
     public ResponseEntity<List<Abrigo>> listar() {
@@ -50,7 +54,8 @@ public class AbrigoController {
     @Transactional
     public ResponseEntity<String> cadastrarPet(@PathVariable String idOuNome, @RequestBody @Valid Pet pet) {
         try{
-            abrigoService.cadastrarPet(idOuNome,pet);
+            Abrigo abrigo = abrigoService.carregarAbrigoString(idOuNome);
+            //petService.cadastrarPet(abrigo,pet);
             return ResponseEntity.ok().build();
         }catch (EntityNotFoundException e){
             return ResponseEntity.notFound().build();

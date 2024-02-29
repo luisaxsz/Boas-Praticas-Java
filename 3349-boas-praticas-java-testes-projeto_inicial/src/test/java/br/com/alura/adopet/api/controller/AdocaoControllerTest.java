@@ -1,6 +1,7 @@
 package br.com.alura.adopet.api.controller;
 
 import br.com.alura.adopet.api.dto.SolicitacaoAdocaoDto;
+import br.com.alura.adopet.api.model.Adocao;
 import br.com.alura.adopet.api.service.AdocaoService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,7 @@ class AdocaoControllerTest {
     private JacksonTester<SolicitacaoAdocaoDto> jsonDto;
 
     @Test
-    void requisicaoDeveriaResponderCod400() throws Exception {
+    void requisicaoSolicitacaoDeveriaResponderCod400() throws Exception {
         //ARRANGE
         String json = "{}";
         //ACT
@@ -46,7 +47,7 @@ class AdocaoControllerTest {
     }
 
     @Test
-    void requisicaoDeveriaResponderCod200() throws Exception {
+    void requisicaoSolicitacaoDeveriaResponderCod200() throws Exception {
         //ARRANGE
         //String json = """
                 //{
@@ -64,6 +65,5 @@ class AdocaoControllerTest {
         Assertions.assertEquals(200, response.getStatus());
         Assertions.assertEquals("Adoção solicitada com sucesso!", response.getContentAsString());
     }
-
 
 }
