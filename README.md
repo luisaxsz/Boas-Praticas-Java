@@ -1,4 +1,6 @@
 # Boas Práticas Java
+<img alt="Static Badge" src="https://img.shields.io/badge/Angular-Formação Concluída-darkgreen">
+
 Formação da alura com 3 cursos e artigos sobre: 
 - SOLID
 -  Design Patterns
