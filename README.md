@@ -3,7 +3,7 @@
 <img src="https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white"/> 
 <img src="https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white"/>
 
-Formação da alura com 3 cursos e artigos sobre: 
+## Assuntos da formação
 - SOLID
 -  Design Patterns
 -  Refatoração
